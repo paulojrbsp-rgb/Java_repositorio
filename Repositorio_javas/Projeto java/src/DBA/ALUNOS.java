@@ -1,22 +1,43 @@
-package DBA;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.xml.transform.Source;
+import java.sql.*;
 import java.util.Scanner;
 
 public class ALUNOS {
 
-    public static void insere(Connection conn, Scanner cs) throws SQLException{// Matricular novo aluno
+    public static void insereAluno(Connection conn, Scanner sc) throws SQLException {// Matricular novo aluno
 
+        System.out.println("---------------------------\n --- Matricular anluno --- \n-----------------------------");
+        System.out.println("1. Informe o Nome do aluno");
+        String nome = sc.nextLine();
+        boolean V;
+
+        do {// Verificação cpf
+            System.out.println("2. Informe o CPF do aluno");
+            String cpf = sc.nextLine();
+            cpf = cpf.replaceAll("\\D", "");//triando caracters não numericos
+
+            if (cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")) {// returnando false
+                V = false;
+            }
+            try {// verficação dos digitos 1º
+
+                int soma = 0;
+                int peso = 10;
+                for (int i = 0; i < 9; i +) {
+                    soma +=(cpf.charAt(i)-'0')* peso--;
+                }
+                int resto = 11 - (soma%11);
+            }
+
+        }
+        while (V = false);
     }
 
     public static void Criartabelaa(Connection conn) throws SQLException{// Criação da tabela do aluno
-        String sql = "CREATE TABLE IF NOT EXISTS Aluno ("+
+        String sql = "CREATE TABLE IF NOT EXISTS Alunos ("+
                 "id SERIAL PRIMARY KEY,"+
                 "nome TEXT NOT NULL,"+
-                "cpf TEXT  UNIQUE NOT NULL,"+
+                "cpf TEXT  VARCHAR(11) UNIQUE NOT NULL,"+
                 "telefone TEXT,"+
                 "idade INTEGER NOT NULL,"+
                 "endereço TEXT NOT NULL," +
@@ -32,7 +53,7 @@ public class ALUNOS {
 
     public static void main(String[] args){// Ativação do codigo
 
-        String url = "jdbc:postgresql://localhost:5432/Aluno"; //Url para conectar com banco
+        String url = "jdbc:postgresql://localhost:5432/Star"; //Url para conectar com banco
 
         try {// Tentativa de connectar funcinamento base
             Scanner sc = new Scanner(System.in);//INPUT
@@ -40,7 +61,7 @@ public class ALUNOS {
             Connection conn = DriverManager.getConnection(url, "postgres", "fatec123*");
 
             // Classes puxadas
-            Criartabelaa(conn);//aluno
+            Criartabelaa(conn);//Tabela do aluno
 
 
         }
