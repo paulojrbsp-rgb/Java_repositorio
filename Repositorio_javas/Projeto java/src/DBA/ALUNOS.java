@@ -9,7 +9,7 @@ public class ALUNOS {
         System.out.println("---------------------------\n --- Matricular anluno --- \n-----------------------------");
         System.out.println("1. Informe o Nome do aluno");
         String nome = sc.nextLine();
-        boolean V;
+    
 
         do {// Verificação cpf
             System.out.println("2. Informe o CPF do aluno");
@@ -38,12 +38,13 @@ public class ALUNOS {
                 "id SERIAL PRIMARY KEY,"+
                 "nome TEXT NOT NULL,"+
                 "cpf TEXT  VARCHAR(11) UNIQUE NOT NULL,"+
-                "telefone TEXT,"+
+                "telefone VARCHAR(15),"+
                 "idade INTEGER NOT NULL,"+
-                "endereço TEXT NOT NULL," +
+                "CEP INTEGER NOT NULL," +
                 "email TEXT NOT NULL," +
-                "senha TEXT NOT NULL)";
-
+                "senha VARCHAR(12) NOT NULL,"+
+                "CHECK(CHAR_LENGTH(senha)BETWEEN 6 AND 12);
+                
 
         Statement stmt = conn.createStatement();
         stmt.execute(sql);
